@@ -1,13 +1,24 @@
-FROM python:3.8-slim 
+# Use the official Python image as a parent image
+FROM python:3.8-slim
 
 # Set the working directory
-WORKDIR /app
+WORKDIR /workspace
 
-# Copy the current directory contents into the container at /app
-COPY . /app
+# Copy the current directory contents into the container
+COPY . /workspace
 
 # Install any needed packages specified in requirements.txt
-RUN pip install --trusted-host pypi.python.org -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Make port 80 available to the world outside this container
-EXPOSE 80
+# Install additional dependencies for YOLOv7
+RUN apt-get update && apt-get install -y \
+    git \
+    wget \
+    unzip \
+    && rm -rf /var/lib/apt/lists/*
+
+# Expose port for Jupyter Notebook
+EXPOSE 8888
+
+# Define the default command to run when starting the container
+CMD ["jupyter", "notebook", "--ip=0.0.0.0", "--port=8888", "--no-browser", "--allow-root"]
