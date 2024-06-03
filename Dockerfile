@@ -15,6 +15,7 @@ RUN apt-get update && apt-get install -y \
     git \
     wget \
     unzip \
+    sudo \
     && rm -rf /var/lib/apt/lists/*
 
 # Expose port for Jupyter Notebook

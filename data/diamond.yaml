@@ -1,0 +1,5 @@
+train: my_diamond_training
+val: my_diamond_validation
+
+nc: 1
+names: ['diamond']
